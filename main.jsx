@@ -10,11 +10,8 @@ const Container = styled.div`
   background: var(--background-light, #fafafa);
 `;
 
-const acc = "mike-sz.near";
 const [accVar, setAccVar] = useState("");
-const [accVar2, setAccVar2] = useState("");
 const [NFTarr, setNFTarr] = useState([]);
-const [NFTarr2, setNFTarr2] = useState([]);
 const [accountId, setaccountId] = useState("");
 
 function fetchNFT(value) {
@@ -25,24 +22,16 @@ function fetchNFT(value) {
     setNFTarr(res.body.list);
   });
 }
-function fetchNFT2(value) {
-  setaccountId(accVar2);
-  asyncFetch(
-    `https://api.kitwallet.app/account/${value}/likelyNFTsFromBlock`
-  ).then((res) => {
-    setNFTarr2(res.body.list);
-  });
-}
 
 const data = (
   <>
     <div className="row mb-3 w-100">
-      <div className="col-xl-3 p-2">
+      <div className="col-xl-12 p-2">
         <Widget
           src={`mike-sz.near/widget/Inputs.Text`}
           props={{
             label: "Wallet Adress",
-            placeholder: "Address 1",
+            placeholder: "type the address.near here!",
             value: state.address1,
             onChange: (address1) => {
               State.update({ address1 });
@@ -51,46 +40,15 @@ const data = (
           }}
         />
 
-        <button onClick={() => fetchNFT(accVar)}>fetchNFT</button>
-        <div className="d-flex gap-1 flex-wrap">
+        <button onClick={() => fetchNFT(accVar)}>fetchNFTs</button>
+        <div className="d-flex gap-1 mt-4 flex-wrap">
           {NFTarr.map((contractId, i) => (
             <Widget
               key={i}
               src={
                 thumbnails
-                  ? "mob.near/widget/NftCollectionThumbs"
-                  : "mob.near/widget/NftCollection"
-              }
-              props={{ accountId, contractId }}
-            />
-          ))}
-        </div>
-      </div>
-      <div className="col-xl-6 p-2">
-        <p>space</p>
-      </div>
-      <div className="col-xl-3 p-2">
-        <Widget
-          src={`mike-sz.near/widget/Inputs.Text`}
-          props={{
-            label: "Wallet Adress",
-            placeholder: "Address 2",
-            value: state.address2,
-            onChange: (address2) => {
-              State.update({ address2 });
-              setAccVar2(address2);
-            },
-          }}
-        />
-        <button onClick={() => fetchNFT2(accVar2)}>fetchNFT</button>
-        <div className="d-flex gap-1 flex-wrap">
-          {NFTarr2.map((contractId, i) => (
-            <Widget
-              key={i}
-              src={
-                thumbnails
-                  ? "mob.near/widget/NftCollectionThumbs"
-                  : "mob.near/widget/NftCollection"
+                  ? "mike-sz.near/widget/NftCollectionThumbs"
+                  : "mike-sz.near/widget/NftCollection"
               }
               props={{ accountId, contractId }}
             />
